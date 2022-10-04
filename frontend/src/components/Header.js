@@ -1,56 +1,24 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { NavLink, Link } from "react-router-dom";
+import LoginButton from "./login";
+import { useAuth0 } from "@auth0/auth0-react";
+import LogoutButton from "./logout";
 
-import slingairLogo from "../assets/logo_text.png";
-
-const Header = ({ handleChange }) => {
-  const [flightNumbers, setFlightNumbers] = useState([]);
-
-  useEffect(() => {
-    // TODO: GET all flight numbers
-
-    fetch("/api/get-flights")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("flight", data.data);
-        setFlightNumbers(data.data);
-        //   setLoading(false);
-      })
-      .catch((error) => {
-        //   setLoading(false);
-        //   setError(true);
-        console.log(error);
-      });
-  }, []);
-
+const Header = () => {
+  const { isAuthenticated } = useAuth0();
   return (
     <Wrapper>
-      <Container>
-        <Link to="/">
-          <Logo src={slingairLogo} alt="Slingshot Airlines Logo" />
-        </Link>
-        <label>
-          Flight Number:
-          <Select onChange={handleChange}>
-            <option value="">Select a flight...</option>
-            {
-              /* TODO: option for each flight number */
-              // map setFlightNumber Data.data
-
-              flightNumbers.map((flightNumber) => {
-                return <option value={flightNumber} key={flightNumber}>{flightNumber}</option>
-              }) 
-            }
-          </Select>
-        </label>
-      </Container>
-      <Nav>
-        <>
-          {/* TODO: only show link if the user has a reservation already */}
-          <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>
-        </>
-      </Nav>
+      <Link to="/">
+        <h1>GetDev</h1>
+      </Link>
+      <Link to="/profile">
+        <h1>profile</h1>
+      </Link>
+      <div>
+        {!isAuthenticated && <LoginButton />}
+        {isAuthenticated && <LogoutButton />}
+      </div>
     </Wrapper>
   );
 };
@@ -77,6 +45,7 @@ const Wrapper = styled.header`
   background: var(--color-alabama-crimson);
   height: 150px;
   padding: var(--padding-page) 18px;
+  /* background-color: red; */
 `;
 const Logo = styled.img`
   height: 60px;
@@ -103,6 +72,7 @@ const StyledNavLink = styled(NavLink)`
   width: 100%;
   text-decoration: none;
   transition: all ease 400ms;
+  background-color: white;
 
   &:disabled {
     cursor: not-allowed;

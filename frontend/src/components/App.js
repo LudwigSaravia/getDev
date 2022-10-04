@@ -1,38 +1,39 @@
 import styled from "styled-components";
-import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Header from "./Header";
 import Footer from "./Footer";
-import SeatSelect from "./SeatSelect";
-import Confirmation from "./Confirmation";
-import Reservation from "./Reservation";
-import GlobalStyles from "./GlobalStyles";
+import Home from "./Home";
+import Search from "./Search";
+import Profile from "./Profile";
+import Role from "./Role";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useContext, useEffect } from "react";
+import { DevContext } from "./DevContext";
 
 const App = () => {
-  const [selectedFlight, setSelectedFlight] = useState("");
+  const { isAuthenticated } = useAuth0();
 
-  const handleChange = (e) => {
-    setSelectedFlight(e.target.value);
-    console.log(selectedFlight);
-  };
-
+  const { setDevs, newDevAdded } = useContext(DevContext);
+  useEffect(() => {
+    fetch("/api/get-devs")
+      .then((res) => res.json())
+      .then((data) => {
+        setDevs(data.data);
+      });
+  }, [newDevAdded]);
   return (
     <BrowserRouter>
-      <GlobalStyles />
-      <Header handleChange={handleChange} />
+      <Header />
       <Main>
         <Routes>
-          <Route
-            path="/"
-            element={<SeatSelect selectedFlight={selectedFlight} />}
-          />
-          <Route path="/confirmation" element={<Confirmation />} />
-          <Route path="/reservation" element={<Reservation />} />
-          <Route path="" element={<h1>404: Oops!</h1>} />
+          <Route exact path="/" element={<Home />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/profile" element={<Profile />} />
+          {isAuthenticated && <Route path="/role" element={<Role />} />}
         </Routes>
-        <Footer />
       </Main>
+      <Footer />
     </BrowserRouter>
   );
 };
