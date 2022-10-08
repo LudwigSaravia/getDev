@@ -4,7 +4,16 @@
 const express = require("express");
 const morgan = require("morgan");
 
-const { signup, getDevs } = require("./handlers");
+const {
+  signup,
+  getDevs,
+  getDev,
+  getUser,
+  addAvailability,
+  removeAvailability,
+  addAppointment,
+  removeAppointment,
+} = require("./handlers");
 
 express()
   // Below are methods that are included in express(). We chain them for convenience.
@@ -21,7 +30,15 @@ express()
   // ---------------------------------
 
   .post("/api/signup", signup)
+  .get("/api/getUser/:email", getUser)
+  .get("/api/getDev/:devId", getDev)
   .get("/api/get-devs", getDevs)
+  //
+  .patch("/api/add-availability", addAvailability)
+  .patch("/api/remove-availability", removeAvailability)
+  //
+  .patch("/api/add-appointment", addAppointment)
+  .patch("/api/remove-appointment", removeAppointment)
 
   // ---------------------------------
   // Nothing to modify below this line

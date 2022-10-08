@@ -24,11 +24,28 @@ const Role = () => {
       .then((res) => res.json())
       .then((data) => {
         setNewDevAdded(!newDevAdded);
+        navigate("/");
       });
   };
 
   const inputHandler = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const uploadImage = (files) => {
+    console.log("files", files[0]);
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "t3w5yvtp");
+    fetch("https://api.cloudinary.com/v1_1/dnluaug28/image/upload", {
+      method: "POST",
+      body: data,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setForm({ ...form, url: data.url });
+        console.log("image upload", data); //data.url
+      });
   };
 
   if (role === "student") {
@@ -82,10 +99,20 @@ const Role = () => {
             />
             <input
               type="text"
-              placeholder="languages"
+              placeholder="languages (e.g. java, C++)"
               name="languages"
               onChange={inputHandler}
             />
+
+            <input
+              type="file"
+              name="image"
+              required
+              onChange={(e) => {
+                uploadImage(e.target.files);
+              }}
+            />
+
             <button>Complete profile</button>
           </form>
         </div>

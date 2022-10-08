@@ -10,6 +10,8 @@ import Role from "./Role";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useContext, useEffect } from "react";
 import { DevContext } from "./DevContext";
+import MyProfile from "./MyProfile";
+import DevDetails from "./DevDetailes";
 
 const App = () => {
   const { isAuthenticated } = useAuth0();
@@ -29,7 +31,8 @@ const App = () => {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<MyProfile />} />
+          <Route path="/dev/:devId" element={<DevDetails />} />
           {isAuthenticated && <Route path="/role" element={<Role />} />}
         </Routes>
       </Main>

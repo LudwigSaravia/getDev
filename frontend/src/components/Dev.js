@@ -14,7 +14,7 @@ const Dev = ({ rate, languages, picture, filterLanguage }) => {
       <Wrapper>
         <p>{rate}</p>
         <p>{languages}</p>
-        <img src={picture} />
+        {/* <img src={picture} /> */}
       </Wrapper>
     );
   }
@@ -23,7 +23,7 @@ const Dev = ({ rate, languages, picture, filterLanguage }) => {
       <Wrapper>
         <p>{rate}</p>
         <p>{languages}</p>
-        <img src={picture} />
+        {/* <img src={picture} /> */}
       </Wrapper>
     );
   }

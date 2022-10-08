@@ -1,20 +1,30 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { NavLink, Link } from "react-router-dom";
 import LoginButton from "./login";
 import { useAuth0 } from "@auth0/auth0-react";
 import LogoutButton from "./logout";
+import { DevContext } from "./DevContext";
+import MyProfile from "./MyProfile";
 
 const Header = () => {
   const { isAuthenticated } = useAuth0();
+
+  const { loggedUser } = useContext(DevContext);
   return (
     <Wrapper>
       <Link to="/">
         <h1>GetDev</h1>
       </Link>
-      <Link to="/profile">
-        <h1>profile</h1>
-      </Link>
+      {isAuthenticated && (
+        // <Link to={loggedUser && `/${loggedUser._id}`}>
+        //   <h1>profile</h1>
+        // </Link>
+        <Link  to={`/profile`}>
+         Personal Profile
+        </Link>
+
+      )}
       <div>
         {!isAuthenticated && <LoginButton />}
         {isAuthenticated && <LogoutButton />}
