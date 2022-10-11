@@ -21,7 +21,7 @@ return(
                   <div>MY LANGUAGES: {loggedUser.languages}</div>
                 </Name>
             </UserInfo>
-            <Project>PAST PROJECT<br/>🡇🡇🡇</Project>
+            <Project>PROJECT</Project>
              <ImgProject src={loggedUser.url} />
        
             
@@ -61,8 +61,10 @@ const Project = styled.div`
 font-family:ARIAL BLACK;
 font-size: 20px;
 color: #fff;
-margin-left: 160px;
-
+/* margin-left: 230px; */
+display: flex;
+margin-left: 260px;
+margin-top: 40px;
 `;
 const ImgProject = styled.img`
 height: 80%;
