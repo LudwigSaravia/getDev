@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Header from "./Header";
-import Footer from "./Footer";
+// import Footer from "./Footer";
 import Home from "./Home";
 import Search from "./Search";
 import Profile from "./Profile";
@@ -12,6 +12,7 @@ import { useContext, useEffect } from "react";
 import { DevContext } from "./DevContext";
 import MyProfile from "./MyProfile";
 import DevDetails from "./DevDetailes";
+import LogInAsUser from "./LogInAsUser";
 
 const App = () => {
   const { isAuthenticated } = useAuth0();
@@ -30,13 +31,13 @@ const App = () => {
       <Main>
         <Routes>
           <Route exact path="/" element={<Home />} />
+          <Route exact path="/loginasuser" element={<LogInAsUser />} />
           <Route path="/search" element={<Search />} />
           <Route path="/profile" element={<MyProfile />} />
           <Route path="/dev/:devId" element={<DevDetails />} />
           {isAuthenticated && <Route path="/role" element={<Role />} />}
         </Routes>
       </Main>
-      <Footer />
     </BrowserRouter>
   );
 };

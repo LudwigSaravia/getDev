@@ -207,21 +207,30 @@ const removeAvailability = async (req, res) => {
 };
 const addAppointment = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
-
-  const { email, time, day } = req.body;
+  
+  const { nonDevEmail, devEmail, time, day} = req.body;
   //try {
-  await client.connect();
-  const sessionObj = { [day]: time };
+    await client.connect();
+    const sessionObj = { _id: uuidv4(), nonDevEmail, devEmail, day, time};
+    const path = `availability.${day}`;
 
   const db = client.db("getDev");
 
-  const nonDev = await db.collection("nondev-users").findOne({ email });
-  const updatedAppointments = nonDev.appointments.push(sessionObj);
+  const nonDev = await db.collection("nondev-users").findOne({ email: nonDevEmail });
+  const dev = await db.collection("devs").findOne({ email: devEmail });
 
+if(!nonDev || !dev){
+  res.status(404).json({ status: 404, message: "dev or user not found" });
+return  client.close();
+}
   const newAppointments = { $push: { appointments: sessionObj } };
 
-  await db.collection("nondev-users").updateOne({ email }, newAppointments);
-  res.status(200).json({ status: 200, message: "booked" });
+  await db.collection("nondev-users").updateOne({ email:nonDevEmail }, newAppointments);
+  await db.collection("devs").updateOne({ email:devEmail }, newAppointments);
+  const pullResult = await db
+            .collection("devs")
+            .updateOne({ email:devEmail }, { $pull: { [path]: time } });
+  res.status(200).json({ status: 200, message: "booked", data:sessionObj });
   // } catch (err) {
   //   res.status(400).json({ status: 200, message: "something went wrong" });
   // }

@@ -13,15 +13,15 @@ const Header = () => {
   const { loggedUser } = useContext(DevContext);
   return (
     <Wrapper>
-      <Link to="/">
-        <h1>GetDev</h1>
+      <Link to="/" style={{ textDecoration: 'none' }}>
+        <H1>GetDev</H1>
       </Link>
       {isAuthenticated && (
-        // <Link to={loggedUser && `/${loggedUser._id}`}>
-        //   <h1>profile</h1>
-        // </Link>
-        <Link  to={`/profile`}>
-         Personal Profile
+        <Link  to={`/profile`} style={{ textDecoration: 'none' }}>
+          <Element> 
+          Personal Profile
+        
+        </Element>
         </Link>
 
       )}
@@ -33,39 +33,41 @@ const Header = () => {
   );
 };
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
+const H1 = styled.div`
+width: 100%;
+height: 100%;
+font-family:ARIAL BLACK;
+color: #00be67;
 `;
 
-const Select = styled.select`
-  padding: 5px;
-  margin-left: 25px;
-  margin-top: 10px;
-  border-radius: 3px;
-  font-size: 18px;
-  font-family: var(--font-heading);
-  font-weight: bold;
-  border: solid 3px black;
+// const Link = styled.link`
+// text-decoration: none;
+// `;
+const Element = styled.div`
+/* text-decoration: none; */
+color: #ff86c9;
+width: 100%;
+height: 100%;
+font-family:ARIAL BLACK;
 `;
 
 const Wrapper = styled.header`
   display: flex;
   justify-content: space-between;
   background: var(--color-alabama-crimson);
-  height: 150px;
+  height: 100px;
   padding: var(--padding-page) 18px;
-  /* background-color: red; */
-`;
+  background-color: #001d31;
+  `;
 const Logo = styled.img`
   height: 60px;
   width: 550px;
-`;
+  `;
 const Nav = styled.nav`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-`;
+  `;
 const StyledNavLink = styled(NavLink)`
   background: var(--color-selective-yellow);
   border: 1px solid transparent;
@@ -83,12 +85,12 @@ const StyledNavLink = styled(NavLink)`
   text-decoration: none;
   transition: all ease 400ms;
   background-color: white;
-
+  
   &:disabled {
     cursor: not-allowed;
     opacity: 0.5;
   }
-
+  
   &:hover {
     background: var(--color-alabama-crimson);
     color: var(--color-selective-yellow);

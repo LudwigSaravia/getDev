@@ -6,6 +6,8 @@ import { DevContext } from "./DevContext";
 import Search from "./Search";
 
 const Home = () => {
+  document.body.style.backgroundColor = "#001d31";
+
   const { isAuthenticated, user } = useAuth0();
   const { setLoggedUser, loggedUser } = useContext(DevContext);
   console.log("loggedUser", loggedUser);
@@ -32,20 +34,83 @@ const Home = () => {
   }, [isAuthenticated]);
 
   return (
-    <Wrapper>
-      <Element>Find the best dev or be the best</Element>
-      <Link to={"/search"}>Find Dev</Link>
-    </Wrapper>
+    <Body>
+
+      <Wrapper>
+        <Element>Find the best dev or be the best dev</Element>
+        <DownwardArrow>🡇</DownwardArrow>
+        <Link to={"/search"} style={{ textDecoration: 'none' }}><Div>Get Dev!?!?</Div></Link>
+        <UpwardArrow>🡅</UpwardArrow>
+      <Footer>..everything made simple. GetDev now!</Footer>
+      </Wrapper>
+    </Body>
   );
 };
 
-const Wrapper = styled.div`
-  display: flex;
+const Body = styled.div`
+width: 100%;
+height: 100%;
+background-color: #001d31;
+display: flex;
+align-items: center;
+justify-content: center;
+
 `;
 
-const Element = styled.div`
-  align-items: center;
+
+const Wrapper = styled.div`
+background-size: 100%;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+`;
+
+const DownwardArrow = styled.div`
+text-decoration: none;
+color: #fff;
+font-size: 20px;
+margin-top: -35px;
+`;
+
+const Div = styled.div`
+text-decoration: none;
+color: #00be67;
+font-size: 20px;
+width: 100%;
+height: 100%;
+font-family:ARIAL BLACK;
+color: #00be67;
+`;
+const Element = styled.div`
+  /* font-size: x-large; */
+  /* width: 100%; */
+  color: #fff;
+  font-family:  ARIAL BLACK;
+  font-size: 40px;
+  font-weight: normal;
+  line-height: 60px;
+  margin: 10px 0 20px;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 0 #000;
+  margin: 120px 0 24px ;
+  text-align: center;
+`;
+const UpwardArrow = styled.div`
+text-decoration: none;
+color: #fff;
+font-size: 15px;
+margin-top: 300px;
+`;
+const Footer = styled.div`
+text-decoration: none;
+color: #00be67;
+font-size: 12px;
+width: fit-content;
+height: fit-content;
+font-family:ARIAL BLACK;
+color: #ff86c9;
+margin-bottom: 0px;
 `;
 
 export default Home;

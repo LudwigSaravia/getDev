@@ -8,10 +8,25 @@ export const DevProvider = ({ children }) => {
   const [loggedUser, setLoggedUser] = useState("");
   console.log(loggedUser);
 
-  //funtion that accepts email
-  // refetches loggeduser info
-  // set loggeduser
-  const updateUser = (email) => {};
+
+
+
+  const updateUser = (email) => {
+    {
+      fetch(`/api/getUser/${email}`)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("data", data);
+          if (data.user) {
+            setLoggedUser(data.user);
+          } else if (data.nonDevUser) {
+            console.log(data.nonDevUse);
+            setLoggedUser(data.nonDevUser);
+          } 
+        });
+    }
+
+  };
   return (
     <DevContext.Provider
       value={{

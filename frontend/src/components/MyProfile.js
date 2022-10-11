@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { DevContext } from "./DevContext";
 import AvailabilityManager from "./AvailabilityManager";
 import Calendar from "./Calendar";
+import UserInformation from "./UserInformation";
 
 const MyProfile = () => {
   const { isAuthenticated } = useAuth0();
@@ -13,6 +14,7 @@ const MyProfile = () => {
   return (
     <div>
       {!isAuthenticated && <Navigate to="/" replace={true} />}
+      {loggedUser && loggedUser.role == "developer" && <UserInformation/>}
       {loggedUser && <Calendar />}
       {loggedUser && loggedUser.role == "developer" && <AvailabilityManager />}
     </div>
