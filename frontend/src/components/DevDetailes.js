@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import days from "../consts/days";
 import { DevContext } from "./DevContext";
 import hours from "../consts/hours";
+import months from "../consts/months";
+
 import { useAuth0 } from "@auth0/auth0-react";
 import styled from "styled-components";
 
@@ -20,7 +22,7 @@ const DevDetails = () => {
     console.log("days", days);
   }
   
-  const makeAvailable = (email, day, hour) => {
+  const makeAvailable = (email, day, hour, months) => {
     // "/api/add-availability"
 
     fetch("/api/add-availability", {
@@ -29,7 +31,7 @@ const DevDetails = () => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, day, time: hour }),
+      body: JSON.stringify({ email, day, time: hour, month:months }),
     });
   };
  
@@ -55,14 +57,14 @@ const DevDetails = () => {
   }
 
 
-  const makeAppointment = (email, day, hour) => {
+  const makeAppointment = (email, day, hour, months) => {
     fetch("/api/add-appointment", {
       method: "PATCH",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ nonDevEmail:email, devEmail:dev.email, day, time: hour }),
+      body: JSON.stringify({ nonDevEmail:email, devEmail:dev.email, day, time: hour, month:months }),
     })
       .then((res) => res.json())
       .then((data) => {

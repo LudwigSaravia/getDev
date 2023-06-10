@@ -12,26 +12,32 @@ import { useContext, useEffect } from "react";
 import { DevContext } from "./DevContext";
 import MyProfile from "./MyProfile";
 import DevDetails from "./DevDetailes";
-import LogInAsUser from "./LogInAsUser";
+import LogInAsNonDevError from "./LogInAsNonDevError";
 
 const App = () => {
   const { isAuthenticated } = useAuth0();
 
-  const { setDevs, newDevAdded } = useContext(DevContext);
+  const { setDevs,devs, newDevAdded } = useContext(DevContext);
   useEffect(() => {
     fetch("/api/get-devs")
       .then((res) => res.json())
       .then((data) => {
+        console.log(data)
         setDevs(data.data);
       });
   }, [newDevAdded]);
+  //if(devs.length===0) return <p>Loading...</p>
   return (
     <BrowserRouter>
       <Header />
       <Main>
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route exact path="/loginasuser" element={<LogInAsUser />} />
+          <Route
+            exact
+            path="/loginasnondeverror"
+            element={<LogInAsNonDevError />}
+          />
           <Route path="/search" element={<Search />} />
           <Route path="/profile" element={<MyProfile />} />
           <Route path="/dev/:devId" element={<DevDetails />} />

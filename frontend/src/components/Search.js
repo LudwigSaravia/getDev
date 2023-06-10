@@ -4,7 +4,7 @@ import { DevContext } from "./DevContext";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import LogInAsUser from "./LogInAsUser";
+import LogInAsNonDevError from "./LogInAsNonDevError";
 
 const Search = () => {
   document.body.style.backgroundColor = "#001d31";
@@ -37,55 +37,55 @@ const Search = () => {
 
   return (
     <Body>
+      <Wrapper>
+        <div>
+          <Header>
+            <Div1>
+              {!isAuthenticated && <p>To book a session please login!</p>}
+            </Div1>
 
-    <Wrapper>
-      <div>
-        <Header>
-        <Div1>
+            {uniqueLanguages.map((filter) => {
+              return (
+                <>
+                  <Div2>
+                    <label>{filter.replace(/\s/g, "")}</label>
+                    <input
+                      type="checkbox"
+                      value={filter.replace(/\s/g, "")}
+                      onChange={languageHandler}
+                    />
+                  </Div2>
+                </>
+              );
+            })}
+          </Header>
+        </div>
 
-        {!isAuthenticated && <p>To book a session please login!</p>}
-        </Div1>
-
-        {uniqueLanguages.map((filter) => {
+        {devs.map((dev) => {
+          console.log(dev);
           return (
-            <>
-<Div2>
-              <label>{filter.replace(/\s/g, "")}</label>
-              <input
-                type="checkbox"
-                value={filter.replace(/\s/g, "")}
-                onChange={languageHandler}
-                />
-                </Div2>
-            </>
+            <div
+              onClick={() => {
+                {
+                  loggedUser && loggedUser.role == "developer"
+                    ? navigate("/loginasnondeverror")
+                    : isAuthenticated && navigate(`/dev/${dev._id}`);
+                }
+              }}
+            >
+              <Dev
+                bio={dev.bio}
+                rate={dev.rate}
+                languages={dev.languages}
+                nickname={dev.nickname}
+                picture={dev.picture}
+                filterLanguage={language}
+              />
+            </div>
           );
         })}
-        </Header>
-      </div>
-
-      {devs.map((dev) => {
-        console.log(dev)
-        return (
-          <div
-          onClick={() => {
-            {loggedUser && loggedUser.role == "developer" ? navigate ("/loginasuser") : isAuthenticated && navigate(`/dev/${dev._id}`);}
-
-            
-            }}
-            >
-            <Dev
-              bio={dev.bio}
-              rate={dev.rate}
-              languages={dev.languages}
-              nickname={dev.nickname}
-              picture={dev.picture}
-              filterLanguage={language}
-              />
-          </div>
-        );
-      })}
-    </Wrapper>
-</Body>
+      </Wrapper>
+    </Body>
   );
 };
 
@@ -96,44 +96,40 @@ const Wrapper = styled.div`
   width: 600px;
 `;
 const Body = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-background-color: #001d31;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #001d31;
 `;
 const Header = styled.div`
-display: flex;
-flex-wrap: wrap;
-justify-content: center;
-align-items: center;
-background-color: #001d31;
-
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-color: #001d31;
 `;
 const Div1 = styled.div`
-display: flex;
-flex-direction: column;
-background-color: #001d31;
-width: 100%;
-align-items: center;
-color:#00be67;
-font-family:ARIAL BLACK;
+  display: flex;
+  flex-direction: column;
+  background-color: #001d31;
+  width: 100%;
+  align-items: center;
+  color: #00be67;
+  font-family: ARIAL BLACK;
 `;
 const Div2 = styled.div`
-display: flex;
-background-color: #001d31;
-width: fit-content;
-margin: 5px;
-justify-content: center;
-font-size: 12px;
-color: #00be67;
-font-family:ARIAL BLACK;
-/* border: solid white; */
-border-radius: 10%;
-
+  display: flex;
+  background-color: #001d31;
+  width: fit-content;
+  margin: 5px;
+  justify-content: center;
+  font-size: 12px;
+  color: #00be67;
+  font-family: ARIAL BLACK;
+  /* border: solid white; */
+  border-radius: 10%;
 `;
 const Test = styled.div`
-background-color: red;
-
+  background-color: red;
 `;
 export default Search;

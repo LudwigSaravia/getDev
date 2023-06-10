@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-const LogInAsUser = () => {
+const LogInAsNonDevError = () => {
   return (
     <>
-      <H1>Sorry this page is only accesible to students for now.</H1>
+      <H1>Sorry this page is only accesible to Non-Devs for now.</H1>
     </>
   );
 };
@@ -14,4 +14,4 @@ const H1 = styled.div`
   color: white;
 `;
 
-export default LogInAsUser;
+export default LogInAsNonDevError;
